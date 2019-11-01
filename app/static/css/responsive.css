@@ -122,9 +122,12 @@
 	}
 }
 
- 
+
 /* Tablet desktop :768px. */
 @media (min-width: 768px) and (max-width: 991px) {
+    .nav-menu-dd{
+		display:none !important;
+	}
 	.main-menu-area{
 		display:none;
 	}
@@ -323,10 +326,13 @@
 	}
 }
 
- 
+
 /* small mobile :320px. */
 @media (max-width: 767px) {
 	.container {width:300px}
+    .nav-menu-dd{
+		display:none !important;
+	}
 	.main-menu-area{
 		display:none;
 	}
@@ -635,14 +641,17 @@
 	.table.table-hover > tbody > tr > td, .table.table-hover > tbody > tr > th, .table.table-hover > tfoot > tr > td, .table.table-hover > tfoot > tr > th, .table.table-hover > thead > tr > td, .table.table-hover > thead > tr > th {
 		white-space: nowrap;
 	}
-	
+
 }
- 
+
 /* Large Mobile :480px. */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 	.container {width:450px}
-	.main-menu-area{
+    .nav-menu-dd{
 		display:none;
+	}
+	.main-menu-area{
+		display:none !important;
 	}
 	.lg-res-mg-bl{
 		display:block;
@@ -683,6 +692,5 @@
 	.bread-ntd{
 		display:inline-block;
 	}
-	
+
 }
- 
