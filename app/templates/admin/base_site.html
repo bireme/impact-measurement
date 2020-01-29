@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Impact Measurement' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Impact Measurement' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block userlinks %}
+    <a href="{% url 'rosetta-old-home-redirect' %}">{% trans "Translations" %}</a> /
+    {{ block.super }}
+{% endblock %}
