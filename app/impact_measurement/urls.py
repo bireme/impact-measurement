@@ -26,6 +26,9 @@ urlpatterns = [
     # Main
     # path('', main_views.dashboard, name="dashboard"),
 
+    # Feedback
+    path('send-feedback/', main_views.get_feedback),
+
     # API
     path('api/', include(main_resource.urls)),
 ]
