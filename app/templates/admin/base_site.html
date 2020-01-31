@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {% trans 'Impact Measurement' %}{% endblock %}
+{% block title %}{{ title }} | {% trans 'Impact Measurement'|upper %}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{% trans 'Impact Measurement' %}</h1>
+<h1 id="site-name">{% trans 'Impact Measurement'|upper %}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
