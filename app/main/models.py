@@ -2,11 +2,11 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, get_language
-from django.contrib.auth.models import User
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 from django.template.defaultfilters import slugify
+from django_userforeignkey.models.fields import UserForeignKey
 
 import uuid
 
@@ -24,8 +24,8 @@ class Generic(models.Model):
 
     created_time = models.DateTimeField(_("created at"), auto_now_add=True, editable=False)
     updated_time = models.DateTimeField(_("updated"), auto_now=True, editable=False, null=True, blank=True)
-    created_by = models.ForeignKey(User, null=True, blank=True, related_name="+", editable=False, on_delete=models.PROTECT)
-    updated_by = models.ForeignKey(User, null=True, blank=True, related_name="+", editable=False, on_delete=models.PROTECT)
+    created_by = UserForeignKey(auto_user_add=True, related_name="+")
+    updated_by = UserForeignKey(auto_user=True, auto_user_add=True, related_name="+")
 
 class WebsiteList(Generic):
 

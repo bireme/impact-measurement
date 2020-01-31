@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'api',
     'main',
     'rosetta',
+    'django_userforeignkey',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_userforeignkey.middleware.UserForeignKeyMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
