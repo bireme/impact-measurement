@@ -7,7 +7,7 @@ Follows a list of the Open Source Softwares and their respective applicable Open
 Observation: Information may be subject to alteration.
 
 ***
-1. Django » 2.26
+1. Django » 2.2.9
 
 * BSD license
 * https://github.com/django/django/blob/master/LICENSE
@@ -52,7 +52,12 @@ Observation: Information may be subject to alteration.
 * Python Software Foundation License (PSFL)
 * https://opensource.org/licenses/Python-2.0
 ***
-10. python-dateutil » 2.8.1
+10. Django UserForeignKey » 0.3.0
+
+* BSD License
+* https://opensource.org/licenses/BSD-3-Clause
+***
+11. python-dateutil » 2.8.1
 
 * Apache License v2.0
 * http://www.apache.org/licenses/LICENSE-2.0
