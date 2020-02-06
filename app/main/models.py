@@ -87,10 +87,10 @@ class Questions(Generic):
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
     
-    site = models.ForeignKey(WebsiteList, verbose_name=_("Website"), blank=True, on_delete=models.PROTECT)
+    question = models.CharField(_('Question'), max_length=455, blank=True)
+    site = models.ManyToManyField(WebsiteList, verbose_name=_('Websites'), blank=False)
     context = models.ForeignKey(QuestionContextList, verbose_name=_("Context"), blank=True, on_delete=models.PROTECT)
     type = models.ForeignKey(QuestionTypeList, verbose_name=_("Type"), blank=True, on_delete=models.PROTECT)
-    question = models.CharField(_('Question'), max_length=455, blank=True)
     language = models.CharField(_("Language"), max_length=10, choices=LANGUAGES_CHOICES)
 
     def get_translations(self):
@@ -112,17 +112,17 @@ class Questions(Generic):
         lang_code = get_language()
         translation = QuestionsLocal.objects.filter(question_id=self.id, language=lang_code)
         if translation:
-            return "%s | %s | %s" % (self.site, self.context, translation[0].label)
+            return "%s | %s" % (translation[0].label, self.context)
         else:
-            return "%s | %s | %s" % (self.site, self.context, self.question)
+            return "%s | %s" % (self.question, self.context)
 
     def __str__(self):
         lang_code = get_language()
         translation = QuestionsLocal.objects.filter(question_id=self.id, language=lang_code)
         if translation:
-            return "%s | %s | %s" % (self.site, self.context, translation[0].label)
+            return "%s | %s" % (translation[0].label, self.context)
         else:
-            return "%s | %s | %s" % (self.site, self.context, self.question)
+            return "%s | %s" % (self.question, self.context)
 
 class QuestionsLocal(models.Model):
 
@@ -146,7 +146,7 @@ class Answers(Generic):
         verbose_name = _("Answer")
         verbose_name_plural = _("Answers")
 
-    question = models.ForeignKey(Questions, verbose_name=_("Question"), help_text=_("Website | Context | Question"), blank=True, on_delete=models.PROTECT)
+    question = models.ForeignKey(Questions, verbose_name=_("Question"), help_text=_("Question | Context"), blank=True, on_delete=models.PROTECT)
     rating = models.CharField(_('Rating'), max_length=55, blank=True)
     user = models.CharField(_('User'), max_length=255, blank=True)
     myvhl_user = models.CharField(_('MyVHL user'), max_length=255, blank=True)

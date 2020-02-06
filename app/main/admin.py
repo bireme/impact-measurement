@@ -11,11 +11,10 @@ class QuestionsLocalAdmin(admin.TabularInline):
 @admin.register(Questions)
 class QuestionsAdmin(admin.ModelAdmin):
     inlines = [QuestionsLocalAdmin,]
-    list_display = ('site', 'context', 'type', 'question',)
+    list_display = ('question', 'context', 'type',)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(QuestionsAdmin, self).get_form(request, obj, **kwargs)
-        # form.base_fields['site'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
         # form.base_fields['type'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
         # form.base_fields['context'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
         return form
