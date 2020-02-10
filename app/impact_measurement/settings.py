@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'debug_toolbar',
     'api',
     'main',
     'rosetta',
@@ -53,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_userforeignkey.middleware.UserForeignKeyMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'impact_measurement.urls'
@@ -82,6 +80,7 @@ WSGI_APPLICATION = 'impact_measurement.wsgi.application'
 
 PROJECT_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 
+
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
@@ -100,6 +99,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT_PATH, 'static'),
     os.path.join(PROJECT_ROOT_PATH, 'uploads'),
 )
+
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -173,18 +173,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
-# Debug toolbar settings
-DEBUG_TOOLBAR = False
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
-INTERNAL_IPS = ('127.0.0.1',)
-
 try:
-    from settings_local import *
+    from impact_measurement.settings_local import *
 except ImportError:
     pass
