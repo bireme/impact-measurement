@@ -32,7 +32,13 @@ class MainResource(ModelResource):
         return super(MainResource, self).build_filters(filters)
 
     def dehydrate(self, bundle):
-        questions = Questions.objects.filter(site=bundle.obj.id)
+        filter_page = bundle.request.GET.get('page', False)
+
+        if filter_page:
+            page = "'"+filter_page+"'"
+            questions = Questions.objects.filter(site=bundle.obj.id, page__contains=page)
+        else:
+            questions = Questions.objects.filter(site=bundle.obj.id)
 
         if questions:
             bundle.data['questions'] = []
@@ -41,6 +47,7 @@ class MainResource(ModelResource):
                 # _q = model_to_dict(q)
                 _q = {}
                 _q['id'] = q.id
+                _q['page'] = q.page
                 _q['context'] = q.context
                 _q['type'] = q.type.slug
                 _q['question'] = {q.language: q.question}

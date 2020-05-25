@@ -2,6 +2,22 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 
 from main.models import *
+from main.forms import *
+
+import ast
+
+
+PAGES = (
+    ('wp-home', 'Home (WP)'),
+    ('wp-document', 'Document (WP)'),
+    ('wp-search', 'Search (WP)'),
+    ('iahx-document', 'Document (iAHx)'),
+    ('iahx-search', 'Search (iAHx)'),
+    ('iahx-search-skip-true', 'Search skfp=true (iAHx)'),
+    ('iahx-search-skip-false', 'Search skfp=false (iAHx)'),
+    ('iahx-advanced-search', 'Advanced Search (iAHx)'),
+    ('iahx-decs-locator', 'DeCS Locator (iAHx)'),
+)
 
 
 class QuestionsLocalAdmin(admin.TabularInline):
@@ -10,13 +26,15 @@ class QuestionsLocalAdmin(admin.TabularInline):
 
 @admin.register(Questions)
 class QuestionsAdmin(admin.ModelAdmin):
+    form = QuestionsForm
     inlines = [QuestionsLocalAdmin,]
-    list_display = ('question', 'context', 'type',)
+    list_display = ('question', 'page', 'context', 'type',)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(QuestionsAdmin, self).get_form(request, obj, **kwargs)
-        # form.base_fields['type'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
+        # form.base_fields['page'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
         # form.base_fields['context'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
+        # form.base_fields['type'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
         return form
 
 @admin.register(QuestionContextList)
@@ -43,6 +61,6 @@ class AnswersAdmin(admin.ModelAdmin):
     label_from_instance.short_description = "%s" % (_("Question"))
 
 
-# models = [Questions, Answers, QuestionContextList, QuestionTypeList, WebsiteList]
+# models = [Questions, Answers, QuestionContextList, WebsiteList, QuestionTypeList]
 
 # admin.site.register(models)

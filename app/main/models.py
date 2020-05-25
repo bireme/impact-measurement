@@ -17,6 +17,7 @@ LANGUAGES_CHOICES = (
     ('es', _('Spanish')),
 )
 
+
 class Generic(models.Model):
 
     class Meta:
@@ -87,8 +88,9 @@ class Questions(Generic):
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
     
-    question = models.CharField(_('Question'), max_length=455, blank=True)
+    question = models.CharField(_('Question'), max_length=455)
     site = models.ManyToManyField(WebsiteList, verbose_name=_('Websites'), blank=False)
+    page = models.CharField(_("Pages"), max_length=255, blank=True)
     context = models.ForeignKey(QuestionContextList, verbose_name=_("Context"), blank=True, on_delete=models.PROTECT)
     type = models.ForeignKey(QuestionTypeList, verbose_name=_("Type"), blank=True, on_delete=models.PROTECT)
     language = models.CharField(_("Language"), max_length=10, choices=LANGUAGES_CHOICES)
