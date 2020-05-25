@@ -28,7 +28,18 @@ class QuestionsLocalAdmin(admin.TabularInline):
 class QuestionsAdmin(admin.ModelAdmin):
     form = QuestionsForm
     inlines = [QuestionsLocalAdmin,]
-    list_display = ('question', 'page', 'context', 'type',)
+    list_display = ('question', 'get_pages', 'context', 'type',)
+    list_filter = ('site', 'context', 'type',)
+    search_fields = ['question', 'page',]
+
+    def get_pages(self, obj):
+        if obj.page:
+            pages = ast.literal_eval(obj.page)
+            labels = [dict(PAGES)[page] for page in pages]
+            return labels
+        else:
+            return 'lango'
+    get_pages.short_description = _("Pages")
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(QuestionsAdmin, self).get_form(request, obj, **kwargs)
