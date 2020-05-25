@@ -41,13 +41,6 @@ class QuestionsAdmin(admin.ModelAdmin):
             return 'lango'
     get_pages.short_description = _("Pages")
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(QuestionsAdmin, self).get_form(request, obj, **kwargs)
-        # form.base_fields['page'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
-        # form.base_fields['context'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
-        # form.base_fields['type'].label_from_instance = lambda obj: "{} {}".format(obj.id, obj.name)
-        return form
-
 @admin.register(QuestionContextList)
 class QuestionContextListAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug',)
