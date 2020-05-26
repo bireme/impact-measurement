@@ -59,6 +59,7 @@ class WebsiteListAdmin(admin.ModelAdmin):
 @admin.register(Answers)
 class AnswersAdmin(admin.ModelAdmin):
     list_display = ('question', 'user', 'myvhl_user', 'page_type', 'rating',)
+    search_fields = ['page',]
 
     def label_from_instance(self, obj):
         return "%s" % (obj.question)
