@@ -37,7 +37,7 @@ class QuestionsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuestionsForm, self).__init__(*args, **kwargs)
 
-        self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, required=False)
+        self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, widget=forms.SelectMultiple(attrs={'size': 11}), required=False)
 
         if 'instance' in kwargs:
             self.initial['page'] = ast.literal_eval(kwargs['instance'].page)
