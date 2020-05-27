@@ -51,6 +51,21 @@ class QuestionTypeListAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug',)
     readonly_fields = ('slug',)
 
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
+
 @admin.register(WebsiteList)
 class WebsiteListAdmin(admin.ModelAdmin):
     list_display = ('name', 'url', 'code',)
@@ -60,6 +75,21 @@ class WebsiteListAdmin(admin.ModelAdmin):
 class AnswersAdmin(admin.ModelAdmin):
     list_display = ('question', 'user', 'myvhl_user', 'page_type', 'rating',)
     search_fields = ['page',]
+
+    def has_add_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
+
+    def has_delete_permission(self, request, obj=None):
+        if not request.user.is_superuser:
+            return False
+        return True
 
     def label_from_instance(self, obj):
         return "%s" % (obj.question)
