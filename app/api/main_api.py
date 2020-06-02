@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.urls import path, re_path, include
-
+from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
@@ -36,7 +36,7 @@ class MainResource(ModelResource):
 
         if filter_page:
             page = "'"+filter_page+"'"
-            questions = Questions.objects.filter(site=bundle.obj.id, page__contains=page)
+            questions = Questions.objects.filter(Q(site=bundle.obj.id, page__contains=page) | Q(site=bundle.obj.id, page='[]'))
         else:
             questions = Questions.objects.filter(site=bundle.obj.id)
 

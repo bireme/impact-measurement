@@ -37,8 +37,6 @@ class QuestionsAdmin(admin.ModelAdmin):
             pages = ast.literal_eval(obj.page)
             labels = [dict(PAGES)[page] for page in pages]
             return labels
-        else:
-            return 'lango'
     get_pages.short_description = _("Pages")
 
 @admin.register(QuestionContextList)

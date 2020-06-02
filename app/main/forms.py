@@ -33,11 +33,12 @@ class QuestionsForm(forms.ModelForm):
     class Meta:
         model = Questions
         fields = '__all__'
-
+        
     def __init__(self, *args, **kwargs):
         super(QuestionsForm, self).__init__(*args, **kwargs)
 
         self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, widget=forms.SelectMultiple(attrs={'size': 11}), required=False)
+        self.fields['page'].help_text = _("Leave blank to display this question on all pages")
 
-        if 'instance' in kwargs:
+        if 'instance' in kwargs and kwargs['instance'] is not None:
             self.initial['page'] = ast.literal_eval(kwargs['instance'].page)
