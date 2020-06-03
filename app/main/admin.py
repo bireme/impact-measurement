@@ -11,6 +11,8 @@ PAGES = (
     ('wp-home', 'Home (WP)'),
     ('wp-document', 'Document (WP)'),
     ('wp-search', 'Search (WP)'),
+    ('wp-plugin-document', 'Document (WP Plugin)'),
+    ('wp-plugin-search', 'Search (WP Plugin)'),
     ('iahx-document', 'Document (iAHx)'),
     ('iahx-search', 'Search (iAHx)'),
     ('iahx-search-skip-true', 'Search skfp=true (iAHx)'),
@@ -34,8 +36,11 @@ class QuestionsAdmin(admin.ModelAdmin):
 
     def get_pages(self, obj):
         if obj.page:
-            pages = ast.literal_eval(obj.page)
-            labels = [dict(PAGES)[page] for page in pages]
+            if '[]' == obj.page:
+                labels = _("All Pages")
+            else:
+                pages = ast.literal_eval(obj.page)
+                labels = [dict(PAGES)[page] for page in pages]
             return labels
     get_pages.short_description = _("Pages")
 

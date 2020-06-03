@@ -13,6 +13,10 @@ PAGES_CHOICES = (
     	('wp-document', 'Document'),
     	('wp-search', 'Search'),
     )),
+    ('WP Plugins', (
+        ('wp-plugin-document', 'Document'),
+        ('wp-plugin-search', 'Search'),
+    )),
     ('iAHx', (
     	('iahx-document', 'Document'),
     	('iahx-search', 'Search'),
@@ -37,7 +41,7 @@ class QuestionsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuestionsForm, self).__init__(*args, **kwargs)
 
-        self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, widget=forms.SelectMultiple(attrs={'size': 11}), required=False)
+        self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, widget=forms.SelectMultiple(attrs={'size': 14}), required=False)
         self.fields['page'].help_text = _("Leave blank to display this question on all pages")
 
         if 'instance' in kwargs and kwargs['instance'] is not None:
