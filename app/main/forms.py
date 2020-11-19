@@ -4,8 +4,6 @@ from django import forms
 
 from main.models import *
 
-import ast
-
 
 PAGES_CHOICES = (
     ('WordPress', (
@@ -20,8 +18,8 @@ PAGES_CHOICES = (
     ('iAHx', (
     	('iahx-document', 'Document'),
     	('iahx-search', 'Search'),
-        ('iahx-search-skip-true', 'Search skfp=true'),
-    	('iahx-search-skip-false', 'Search skfp=false'),
+        ('iahx-search-skfp-true', 'Search skfp=true'),
+    	('iahx-search-skfp-false', 'Search skfp=false'),
     	('iahx-advanced-search', 'Advanced Search'),
     	('iahx-decs-locator', 'DeCS Locator'),
     )),
@@ -40,9 +38,4 @@ class QuestionsForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super(QuestionsForm, self).__init__(*args, **kwargs)
-
-        self.fields['page'] = forms.MultipleChoiceField(choices=PAGES_CHOICES, widget=forms.SelectMultiple(attrs={'size': 14}), required=False)
-        self.fields['page'].help_text = _("Leave blank to display this question on all pages")
-
-        if 'instance' in kwargs and kwargs['instance'] is not None:
-            self.initial['page'] = ast.literal_eval(kwargs['instance'].page)
+        # self.fields['page'].help_text = _("Leave blank to display this question on all pages")

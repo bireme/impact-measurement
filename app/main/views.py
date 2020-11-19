@@ -57,3 +57,9 @@ def get_feedback(request, **kwargs):
     response["Access-Control-Allow-Headers"] = "*" 
     
     return response
+
+def load_questions(request):
+    site_id = request.GET.get('site')
+    page_id = request.GET.get('page')
+    questions = Questions.objects.filter(site=site_id, page=page_id).order_by('question')
+    return render(request, 'admin/questions_list.html', {'questions': questions})

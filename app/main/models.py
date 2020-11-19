@@ -82,6 +82,26 @@ class QuestionTypeList(Generic):
     def __str__(self):
         return self.name
 
+class QuestionPageTypeList(Generic):
+
+    class Meta:
+        verbose_name = _("Page type")
+        verbose_name_plural = _("Page types")
+
+    name = models.CharField(_('Page'), max_length=255, blank=True)
+    slug = models.SlugField(_('Slug'), max_length=255, default='', editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(QuestionPageTypeList, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
 class Questions(Generic):
 
     class Meta:
@@ -89,8 +109,8 @@ class Questions(Generic):
         verbose_name_plural = _("Questions")
     
     question = models.CharField(_('Question'), max_length=455)
-    site = models.ManyToManyField(WebsiteList, verbose_name=_('Websites'), blank=False)
-    page = models.CharField(_("Pages"), max_length=255, blank=True)
+    site = models.ManyToManyField(WebsiteList, verbose_name=_('Websites'), blank=True)
+    page = models.ManyToManyField(QuestionPageTypeList, verbose_name=_('Pages'), blank=True)
     context = models.ForeignKey(QuestionContextList, verbose_name=_("Context"), blank=True, on_delete=models.PROTECT)
     type = models.ForeignKey(QuestionTypeList, verbose_name=_("Type"), blank=True, on_delete=models.PROTECT)
     language = models.CharField(_("Language"), max_length=10, choices=LANGUAGES_CHOICES)
@@ -125,6 +145,24 @@ class Questions(Generic):
             return "%s | %s" % (translation[0].label, self.context)
         else:
             return "%s | %s" % (self.question, self.context)
+
+class QuestionsOrdering(models.Model):
+
+    class Meta:
+        verbose_name = _("Questions ordering")
+        verbose_name_plural = _("Questions ordering")
+        unique_together = ('page', 'site',)
+
+    site = models.ForeignKey(WebsiteList, verbose_name=_("Website"), on_delete=models.PROTECT)
+    page = models.ForeignKey(QuestionPageTypeList, verbose_name=_("Page"), on_delete=models.PROTECT)
+    order = models.CharField(_('Order'), max_length=255, blank=False, help_text=_("Comma-separated (e.g. 1,2,3,4,5)"))
+
+    def __unicode__(self):
+        return "%s | %s | %s" % (self.site.name, self.page.name, self.order)
+
+    def __str__(self):
+        return "%s | %s | %s" % (self.site.name, self.page.name, self.order)
+
 
 class QuestionsLocal(models.Model):
 

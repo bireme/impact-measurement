@@ -15,8 +15,8 @@ PAGES = (
     ('wp-plugin-search', 'Search (WP Plugin)'),
     ('iahx-document', 'Document (iAHx)'),
     ('iahx-search', 'Search (iAHx)'),
-    ('iahx-search-skip-true', 'Search skfp=true (iAHx)'),
-    ('iahx-search-skip-false', 'Search skfp=false (iAHx)'),
+    ('iahx-search-skfp-true', 'Search skfp=true (iAHx)'),
+    ('iahx-search-skfp-false', 'Search skfp=false (iAHx)'),
     ('iahx-advanced-search', 'Advanced Search (iAHx)'),
     ('iahx-decs-locator', 'DeCS Locator (iAHx)'),
 )
@@ -33,16 +33,17 @@ class QuestionsAdmin(admin.ModelAdmin):
     list_display = ('question', 'get_pages', 'context', 'type',)
     list_filter = ('site', 'context', 'type',)
     search_fields = ['question', 'page',]
+    # filter_horizontal = ('site', 'page',)
 
     def get_pages(self, obj):
-        if obj.page:
-            if '[]' == obj.page:
-                labels = _("All Pages")
-            else:
-                pages = ast.literal_eval(obj.page)
-                labels = [dict(PAGES)[page] for page in pages]
-            return labels
+        return ", ".join([p.name for p in obj.page.all()])
     get_pages.short_description = _("Pages")
+
+@admin.register(QuestionsOrdering)
+class QuestionsOrderingAdmin(admin.ModelAdmin):
+    list_display = ('site', 'page', 'order',)
+    list_filter = ('site', 'page',)
+    #search_fields = ['site', 'page',]
 
 @admin.register(QuestionContextList)
 class QuestionContextListAdmin(admin.ModelAdmin):
@@ -68,6 +69,11 @@ class QuestionTypeListAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             return False
         return True
+
+@admin.register(QuestionPageTypeList)
+class QuestionPageTypeListAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug',)
+    readonly_fields = ('slug',)
 
 @admin.register(WebsiteList)
 class WebsiteListAdmin(admin.ModelAdmin):
@@ -99,6 +105,6 @@ class AnswersAdmin(admin.ModelAdmin):
     label_from_instance.short_description = "%s" % (_("Question"))
 
 
-# models = [Questions, Answers, QuestionContextList, WebsiteList, QuestionTypeList]
+# models = [Questions, Answers, QuestionContextList, WebsiteList, QuestionTypeList, QuestionPageTypeListAdmin, QuestionsOrderingAdmin]
 
 # admin.site.register(models)

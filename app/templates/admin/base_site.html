@@ -1,6 +1,15 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
+{% block extrastyle %}
+    {{ block.super }}
+    <style type="text/css">
+        .questions-list {
+            margin-left: 160px;
+        }
+    </style>
+{% endblock %}
+
 {% block title %}{{ title }} | {% trans 'Impact Measurement'|upper %}{% endblock %}
 
 {% block branding %}
@@ -12,4 +21,34 @@
 {% block userlinks %}
     <a href="{% url 'rosetta-old-home-redirect' %}">{% trans "Translations" %}</a> /
     {{ block.super }}
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script type="text/javascript">
+        (function($) {
+            'use strict';
+            $("#id_site, #id_page").change(function () {
+                var url = '{% url 'ajax_load_questions' %}'; // get the url of the `load_questions` view
+                var site = $("#id_site").val(); // get the selected site ID from the HTML input
+                var page = $("#id_page").val(); // get the selected page ID from the HTML input
+
+                if (site && page) {
+                    $.ajax({ // initialize an AJAX request
+                        url: url, // set the url of the request (= localhost:8000/hr/ajax/load-questions/)
+                        data: {
+                            'site': site, // add the site id to the GET parameters
+                            'page': page, // add the page id to the GET parameters
+                        },
+                        success: function (data) { // `data` is the return of the `load_questions` view function
+                            $(".questions-list").remove();
+                            $("#id_order").parent().append(data); // display the contents of the questions with the data that came from the server
+                        }
+                    });
+                } else {
+                    $(".questions-list").remove();                	
+                }
+            });
+        })(django.jQuery);
+    </script>
 {% endblock %}

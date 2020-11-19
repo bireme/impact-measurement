@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<div class="questions-list">
+    <dl>
+        <dt>{% trans "Questions" %}:</dt>
+        {% if questions %}
+            {% for q in questions %}
+                <dd>{{ forloop.counter }} - {{ q.question }}</dd>
+            {% endfor %}
+        {% else %}
+            <dd>{% trans "Not found" %}</dd>
+        {% endif %}
+    </dl>
+</div>

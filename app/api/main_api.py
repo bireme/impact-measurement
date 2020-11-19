@@ -13,6 +13,7 @@ from main.models import *
 
 import requests
 import urllib
+import operator
 
 
 class MainResource(ModelResource):
@@ -35,22 +36,25 @@ class MainResource(ModelResource):
         filter_page = bundle.request.GET.get('page', False)
 
         if filter_page:
-            page = "'"+filter_page+"'"
-            questions = Questions.objects.filter(Q(site=bundle.obj.id, page__contains=page) | Q(site=bundle.obj.id, page='[]'))
+            questions = Questions.objects.filter(site=bundle.obj.id, page__slug=filter_page).order_by('question')
         else:
-            questions = Questions.objects.filter(site=bundle.obj.id)
+            raise BadRequest("missing page param")
 
         if questions:
             bundle.data['questions'] = []
+            obj_page = QuestionPageTypeList.objects.get(slug=filter_page)
+            obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page=obj_page.id)
+            order = obj_order.order.split(",");
 
-            for q in questions:
+            for index, q in enumerate(questions):
                 # _q = model_to_dict(q)
                 _q = {}
                 _q['id'] = q.id
-                _q['page'] = q.page
+                _q['page'] = [p.slug for p in q.page.all()]
                 _q['context'] = q.context
                 _q['type'] = q.type.slug
                 _q['question'] = {q.language: q.question}
+                _q['order'] = int(order[index]) if order and len(order) == len(questions) else index+1
 
                 translations = QuestionsLocal.objects.filter(question=q.id)
 
@@ -60,5 +64,9 @@ class MainResource(ModelResource):
                         _q['question'].update(_t)
                 
                 bundle.data['questions'].append(_q)
+
+            if bundle.data['questions']:
+                obj_sorted = sorted(bundle.data['questions'], key=operator.itemgetter('order'))
+                bundle.data['questions'] = obj_sorted
 
         return bundle

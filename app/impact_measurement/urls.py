@@ -17,6 +17,7 @@ urlpatterns = [
     # path('', RedirectView.as_view(url=reverse_lazy('admin:index'))),
     path('', admin.site.login),
     path('admin/', admin.site.urls),
+    path('ajax/load-questions/', main_views.load_questions, name='ajax_load_questions'),
 
     # Login/Logout
     path('login/', LoginView.as_view(template_name="authentication/login.html"), name="login"),
