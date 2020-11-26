@@ -17,6 +17,10 @@ LANGUAGES_CHOICES = (
     ('es', _('Spanish')),
 )
 
+LEVEL_CHOICES = (
+    (1, _('Primary')),
+    (2, _('Secondary')),
+)
 
 class Generic(models.Model):
 
@@ -114,6 +118,7 @@ class Questions(Generic):
     context = models.ForeignKey(QuestionContextList, verbose_name=_("Context"), blank=True, on_delete=models.PROTECT)
     type = models.ForeignKey(QuestionTypeList, verbose_name=_("Type"), blank=True, on_delete=models.PROTECT)
     language = models.CharField(_("Language"), max_length=10, choices=LANGUAGES_CHOICES)
+    level = models.IntegerField(default=1, choices=LEVEL_CHOICES, null=True)
 
     def get_translations(self):
         translation_list = ["%s|%s" % (self.language, self.question.strip())]
@@ -163,6 +168,23 @@ class QuestionsOrdering(models.Model):
     def __str__(self):
         return "%s | %s | %s" % (self.site.name, self.page.name, self.order)
 
+
+class SurveyOrdering(models.Model):
+
+    class Meta:
+        verbose_name = _("Survey ordering")
+        verbose_name_plural = _("Surveys ordering")
+        unique_together = ('page', 'site',)
+
+    site = models.ForeignKey(WebsiteList, verbose_name=_("Website"), on_delete=models.PROTECT)
+    page = models.ForeignKey(QuestionPageTypeList, verbose_name=_("Page"), on_delete=models.PROTECT)
+    order = models.CharField(_('Order'), max_length=255, blank=False, help_text=_("Comma-separated (e.g. 1,2,3,4,5)"))
+
+    def __unicode__(self):
+        return "%s | %s | %s" % (self.site.name, self.page.name, self.order)
+
+    def __str__(self):
+        return "%s | %s | %s" % (self.site.name, self.page.name, self.order)
 
 class QuestionsLocal(models.Model):
 

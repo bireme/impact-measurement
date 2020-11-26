@@ -7,31 +7,28 @@ from django.conf import settings
 
 from api.main_api import MainResource
 
-from main import views as main_views
+from main.views import *
 
 
 main_resource = MainResource()
 
 urlpatterns = [
-    # path('', default_urlconf),
-    # path('', RedirectView.as_view(url=reverse_lazy('admin:index'))),
     path('', admin.site.login),
     path('admin/', admin.site.urls),
-    path('ajax/load-questions/', main_views.load_questions, name='ajax_load_questions'),
+    path('ajax/load-questions/', load_questions, name='ajax_load_questions'),
 
     # Login/Logout
     path('login/', LoginView.as_view(template_name="authentication/login.html"), name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
-    # path('', TemplateView.as_view(template_name='home.html'), name='home'),
-
-    # Main
-    # path('', main_views.dashboard, name="dashboard"),
 
     # Feedback
-    path('send-feedback/', main_views.get_feedback),
+    path('send-feedback/', get_feedback, name="send_feedback"),
 
     # API
     path('api/', include(main_resource.urls)),
+
+    # Main
+    re_path(r'^survey/?$', SurveyView.as_view(), name='survey'),
 ]
 
 # messages translation

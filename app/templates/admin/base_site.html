@@ -29,16 +29,24 @@
         (function($) {
             'use strict';
             $("#id_site, #id_page").change(function () {
+                var level;
                 var url = '{% url 'ajax_load_questions' %}'; // get the url of the `load_questions` view
                 var site = $("#id_site").val(); // get the selected site ID from the HTML input
                 var page = $("#id_page").val(); // get the selected page ID from the HTML input
 
-                if (site && page) {
+                // set the questions level
+                if ( $( "#questionsordering_form" ).length ) { level = 1; }
+                if ( $( "#surveyordering_form" ).length ) { level = 2; }
+
+
+                if (site && page && level) {
                     $.ajax({ // initialize an AJAX request
-                        url: url, // set the url of the request (= localhost:8000/hr/ajax/load-questions/)
+                        url: url, // set the url of the request
+                        type: 'POST',
                         data: {
-                            'site': site, // add the site id to the GET parameters
-                            'page': page, // add the page id to the GET parameters
+                            'level': level, // add the questions level to the GET parameters
+                            'site': site,   // add the site id to the GET parameters
+                            'page': page,   // add the page id to the GET parameters
                         },
                         success: function (data) { // `data` is the return of the `load_questions` view function
                             $(".questions-list").remove();

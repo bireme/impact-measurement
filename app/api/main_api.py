@@ -36,7 +36,7 @@ class MainResource(ModelResource):
         filter_page = bundle.request.GET.get('page', False)
 
         if filter_page:
-            questions = Questions.objects.filter(site=bundle.obj.id, page__slug=filter_page).order_by('question')
+            questions = Questions.objects.filter(site=bundle.obj.id, page__slug=filter_page, level=1).order_by('question')
         else:
             raise BadRequest("missing page param")
 

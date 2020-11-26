@@ -43,7 +43,11 @@ class QuestionsAdmin(admin.ModelAdmin):
 class QuestionsOrderingAdmin(admin.ModelAdmin):
     list_display = ('site', 'page', 'order',)
     list_filter = ('site', 'page',)
-    #search_fields = ['site', 'page',]
+
+@admin.register(SurveyOrdering)
+class SurveyOrderingAdmin(admin.ModelAdmin):
+    list_display = ('site', 'page', 'order',)
+    list_filter = ('site', 'page',)
 
 @admin.register(QuestionContextList)
 class QuestionContextListAdmin(admin.ModelAdmin):
@@ -105,6 +109,6 @@ class AnswersAdmin(admin.ModelAdmin):
     label_from_instance.short_description = "%s" % (_("Question"))
 
 
-# models = [Questions, Answers, QuestionContextList, WebsiteList, QuestionTypeList, QuestionPageTypeListAdmin, QuestionsOrderingAdmin]
+# models = [Questions, Answers, QuestionContextList, WebsiteList, QuestionTypeList, QuestionPageTypeListAdmin, QuestionsOrderingAdmin, SurveyOrderingAdmin]
 
 # admin.site.register(models)

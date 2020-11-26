@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static "css/rating.css" %}">
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static "js/rating.js" %}"></script>
+    <script src="{% static "js/scripts.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Form Examples area start-->
+    <div class="form-example-area">
+        <form id="feedbackForm" method="POST" enctype="multipart/form-data" class="survey-form" action="{% url 'send_feedback' %}" novalidate>
+            <input type="hidden" name="code" value="{{ code }}">
+            <input type="hidden" name="user" value="{{ im_user }}">
+            <input type="hidden" name="myvhl_user" value="{{ myvhl_user }}">
+            <input type="hidden" name="page" value="{{ referer }}">
+            <input type="hidden" name="page_type" value="{{ page }}">
+        </form>
+        <div class="container">
+            {% for question in object_list %}
+                <form action="{% url 'send_feedback' %}" id="feedbackForm{{ forloop.counter0 }}" class="feedbackForm">
+                    <input type="hidden" name="question" value="{{ question.id }}">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-example-wrap mg-t-30">
+                                <div class="cmp-tb-hd mg-t-20">
+
+                                    <h4 class="text-center">{{ question.question }}</h4>
+
+                                    {% if 'star' == question.type.slug %}
+                                        <div class="row rowQuestion text-center">
+                                            <div id="star-rating" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <input type="radio" name="rating" class="star-rating" value="1" />
+                                                <input type="radio" name="rating" class="star-rating" value="2" />
+                                                <input type="radio" name="rating" class="star-rating" value="3" />
+                                                <input type="radio" name="rating" class="star-rating" value="4" />
+                                                <input type="radio" name="rating" class="star-rating" value="5" />
+                                            </div>
+                                        </div>
+                                    {% elif 'number' == question.type.slug %}
+                                        <div class="row rowQuestion text-center">
+                                            <div class="col-12">
+                                                <span class="feedRadio">
+                                                    <label for="1a">1</label>
+                                                    <input type="radio" id="1a" name="rating" value="1">
+                                                </span>
+                                                <span class="feedRadio">
+                                                    <label for="2a">2</label>
+                                                    <input type="radio" id="2a" name="rating" value="2">
+                                                </span>
+                                                <span class="feedRadio">
+                                                    <label for="3a">3</label>
+                                                    <input type="radio" id="3a" name="rating" value="3">
+                                                </span>
+                                                <span class="feedRadio">
+                                                    <label for="4a">4</label>
+                                                    <input type="radio" id="4a" name="rating" value="4">
+                                                </span>
+                                                <span class="feedRadio">
+                                                    <label for="5a">5</label>
+                                                    <input type="radio" id="5a" name="rating" value="5">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {% elif 'yes-no' == question.type.slug %}
+                                        <div class="row rowQuestion text-center">
+                                            <div class="col-12">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="btn btn-secondary btn-yesno">
+                                                        <input type="radio" name="rating" id="opt1" autocomplete="off" value="1"> {% trans "Yes" %}
+                                                    </label>
+                                                    <label class="btn btn-secondary btn-yesno">
+                                                        <input type="radio" name="rating" id="opt2" autocomplete="off" value="2"> {% trans "No" %}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% elif 'likert-1' == question.type.slug %}
+                                        <div class="row rowQuestion rowLikert">
+                                            <div class="col-12 rowOptions">
+                                                <div>
+                                                    <input type="radio" id="5b" name="rating" value="5">
+                                                    <label for="5b">{% trans "Very satisfied" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="4b" name="rating" value="4">
+                                                    <label for="4b">{% trans "Satisfied" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="3b" name="rating" value="3">
+                                                    <label for="3b">{% trans "Neither satisfied nor dissatisfied" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="2b" name="rating" value="2">
+                                                    <label for="2b">{% trans "Dissatisfied" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="1b" name="rating" value="1">
+                                                    <label for="1b">{% trans "Very dissatisfied" %}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% elif 'likert-2' == question.type.slug %}
+                                        <div class="row rowQuestion rowLikert">
+                                            <div class="col-12 rowOptions">
+                                                <div>
+                                                    <input type="radio" id="5c" name="rating" value="5">
+                                                    <label for="5c">{% trans "Strongly agree" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="4c" name="rating" value="4">
+                                                    <label for="4c">{% trans "Agree" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="3c" name="rating" value="3">
+                                                    <label for="3c">{% trans "Neither agree nor disagree" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="2c" name="rating" value="2">
+                                                    <label for="2c">{% trans "Disagree" %}</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" id="1c" name="rating" value="1">
+                                                    <label for="1c">{% trans "Strongly disagree" %}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-example-wrap mg-t-30">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-example-int form-submit text-center">
+                                    <button id="formdata-submit" class="btn btn-success notika-btn-success" disabled>{% trans 'Submit' %}</button>
+                                </div>
+                                <div class="alert-list mg-t-20 text-center">
+                                    <div class="alert alert-success" role="alert">{% trans 'Thanks for your feedback!' %}</div>
+                                    <div class="alert alert-warning" role="alert">{% trans 'Communication problem. Please try again later.' %}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Form Examples area End-->
+{% endblock %}
