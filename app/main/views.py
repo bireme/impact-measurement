@@ -113,9 +113,9 @@ def get_feedback(request, **kwargs):
     return response
 
 def load_questions(request):
-    level = request.POST.get('level')
-    site_id = request.POST.get('site')
-    page_id = request.POST.get('page')
+    level = request.GET.get('level')
+    site_id = request.GET.get('site')
+    page_id = request.GET.get('page')
     
     questions = Questions.objects.filter(site=site_id, page=page_id, level=level).order_by('question')
     
