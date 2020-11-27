@@ -43,8 +43,12 @@ class MainResource(ModelResource):
         if questions:
             bundle.data['questions'] = []
             obj_page = QuestionPageTypeList.objects.get(slug=filter_page)
-            obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page=obj_page.id)
-            order = obj_order.order.split(",");
+
+            try:
+                obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page=obj_page.id)
+                order = obj_order.order.split(",");
+            except QuestionsOrdering.DoesNotExist:
+                order = None
 
             for index, q in enumerate(questions):
                 # _q = model_to_dict(q)

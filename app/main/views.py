@@ -73,10 +73,10 @@ def get_feedback(request, **kwargs):
     success = True
 
     code = escape(request.POST.get('code', None))
-    page = escape(request.POST.get('page_type', None))
+    page = escape(request.POST.get('page_type_slug', None))
 
     try:
-        obj = WebsiteList.objects.get(code=code)
+        obj = WebsiteList.objects.filter(code=code)
 
         if obj:
             request.POST = request.POST.copy() # to make it editable
@@ -96,7 +96,7 @@ def get_feedback(request, **kwargs):
                     success = False
 
             if success:
-                survey = Questions.objects.get(site__code=code, page__slug=page, level=2)
+                survey = Questions.objects.filter(site__code=code, page__slug=page, level=2)
                 
                 if survey:
                     success = 'Survey'
