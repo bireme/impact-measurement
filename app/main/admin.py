@@ -30,8 +30,8 @@ class QuestionsLocalAdmin(admin.TabularInline):
 class QuestionsAdmin(admin.ModelAdmin):
     form = QuestionsForm
     inlines = [QuestionsLocalAdmin,]
-    list_display = ('question', 'get_pages', 'context', 'type',)
-    list_filter = ('site', 'context', 'type',)
+    list_display = ('question', 'get_pages', 'context', 'type', 'level',)
+    list_filter = ('site', 'context', 'type', 'level',)
     search_fields = ['question', 'page',]
     # filter_horizontal = ('site', 'page',)
 

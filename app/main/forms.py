@@ -35,6 +35,9 @@ class QuestionsForm(forms.ModelForm):
     class Meta:
         model = Questions
         fields = '__all__'
+        widgets = {
+            'page': forms.SelectMultiple(attrs={'size': '11'})
+        }
         
     def __init__(self, *args, **kwargs):
         super(QuestionsForm, self).__init__(*args, **kwargs)

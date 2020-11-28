@@ -27,9 +27,9 @@ class SurveyView(ListView):
     template_name = "main/survey.html"
 
     def get_queryset(self):
-        param_code = self.request.POST.get('code')
-        param_page = self.request.POST.get('page')
-        param_user = self.request.POST.get('user')
+        param_code = self.request.GET.get('code')
+        param_page = self.request.GET.get('page')
+        param_user = self.request.GET.get('user')
         referer = self.request.META.get('HTTP_REFERER')
 
         object_list = self.model.objects.none()
@@ -57,12 +57,12 @@ class SurveyView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(SurveyView, self).get_context_data(**kwargs)
-        param_myvhl_user = self.request.POST.get('myvhl_user')
+        param_myvhl_user = self.request.GET.get('myvhl_user')
 
-        context['code'] = self.request.POST.get('code')
-        context['page'] = self.request.POST.get('page')
+        context['code'] = self.request.GET.get('code')
+        context['page'] = self.request.GET.get('page')
         context['referer'] = self.request.META.get('HTTP_REFERER')
-        context['im_user'] = self.request.POST.get('user')
+        context['im_user'] = self.request.GET.get('user')
         context['myvhl_user'] = param_myvhl_user if param_myvhl_user else ''
 
         return context
