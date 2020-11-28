@@ -50,8 +50,12 @@ class SurveyView(ListView):
             raise BadRequest("missing page_type_slug param")
 
         object_list = self.model.objects.filter(site__code=param_code, page__slug=param_page_type_slug, level=2).order_by('question')
-        obj_order = SurveyOrdering.objects.get(site__code=param_code, page__slug=param_page_type_slug)
-        order = obj_order.order.split(",");
+
+        try:
+            obj_order = SurveyOrdering.objects.get(site__code=param_code, page__slug=param_page_type_slug)
+            order = obj_order.order.split(",");
+        except SurveyOrdering.DoesNotExist:
+            order = None
 
         if order and len(order) == len(object_list):
             for index, q in enumerate(object_list):
