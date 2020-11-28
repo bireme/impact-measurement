@@ -66,7 +66,7 @@
                 $(".form-submit").hide();
 
                 if ( data == 'True' ) {       
-                    $(".alert-danger").hide();
+                    $(".alert-warning").hide();
                 } else {
                     $(".alert-success").hide();
                 }

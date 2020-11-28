@@ -19,6 +19,7 @@ from main.models import *
 from main.forms import *
 
 import operator
+import base64
 
 
 # @login_required
@@ -28,30 +29,35 @@ class SurveyView(ListView):
 
     def get_queryset(self):
         param_code = self.request.GET.get('code')
-        param_page = self.request.GET.get('page')
         param_user = self.request.GET.get('user')
-        referer = self.request.META.get('HTTP_REFERER')
-
-        object_list = self.model.objects.none()
-
-        if not referer:
-            raise BadRequest("missing referer")
+        param_page = self.request.GET.get('page')
+        param_page_type = self.request.GET.get('page_type')
+        param_page_type_slug = self.request.GET.get('page_type_slug')
 
         if not param_user:
             raise BadRequest("missing user param")
 
-        if param_code and param_page:
-            object_list = self.model.objects.filter(site__code=param_code, page__slug=param_page, level=2).order_by('question')
-            obj_order = SurveyOrdering.objects.get(site__code=param_code, page__slug=param_page)
-            order = obj_order.order.split(",");
+        if not param_code:
+            raise BadRequest("missing code param")
 
-            if order and len(order) == len(object_list):
-                for index, q in enumerate(object_list):
-                    q.order = int(order[index])
+        if not param_page:
+            raise BadRequest("missing page param")
 
-                object_list = sorted(object_list, key=lambda q: q.order)
-        else:
-            raise BadRequest("missing code/page params")
+        if not param_page_type:
+            raise BadRequest("missing page_type param")
+
+        if not param_page_type_slug:
+            raise BadRequest("missing page_type_slug param")
+
+        object_list = self.model.objects.filter(site__code=param_code, page__slug=param_page_type_slug, level=2).order_by('question')
+        obj_order = SurveyOrdering.objects.get(site__code=param_code, page__slug=param_page_type_slug)
+        order = obj_order.order.split(",");
+
+        if order and len(order) == len(object_list):
+            for index, q in enumerate(object_list):
+                q.order = int(order[index])
+
+            object_list = sorted(object_list, key=lambda q: q.order)
 
         return object_list
 
@@ -60,8 +66,8 @@ class SurveyView(ListView):
         param_myvhl_user = self.request.GET.get('myvhl_user')
 
         context['code'] = self.request.GET.get('code')
-        context['page'] = self.request.GET.get('page')
-        context['referer'] = self.request.META.get('HTTP_REFERER')
+        context['page'] = base64.urlsafe_b64decode(self.request.GET.get('page')).decode('utf-8')
+        context['page_type'] = self.request.GET.get('page_type')
         context['im_user'] = self.request.GET.get('user')
         context['myvhl_user'] = param_myvhl_user if param_myvhl_user else ''
 
