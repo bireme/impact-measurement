@@ -89,8 +89,8 @@ class QuestionTypeList(Generic):
 class QuestionPageTypeList(Generic):
 
     class Meta:
-        verbose_name = _("Page type")
-        verbose_name_plural = _("Page types")
+        verbose_name = _("Page Type")
+        verbose_name_plural = _("Page Types")
 
     name = models.CharField(_('Page'), max_length=255, blank=True)
     slug = models.SlugField(_('Slug'), max_length=255, default='', editable=False)
@@ -154,8 +154,8 @@ class Questions(Generic):
 class QuestionsOrdering(models.Model):
 
     class Meta:
-        verbose_name = _("Questions ordering")
-        verbose_name_plural = _("Questions ordering")
+        verbose_name = _("Questions Ordering (Primary)")
+        verbose_name_plural = _("Questions Ordering (Primary)")
         unique_together = ('page', 'site',)
 
     site = models.ForeignKey(WebsiteList, verbose_name=_("Website"), on_delete=models.PROTECT)
@@ -172,8 +172,8 @@ class QuestionsOrdering(models.Model):
 class SurveyOrdering(models.Model):
 
     class Meta:
-        verbose_name = _("Survey ordering")
-        verbose_name_plural = _("Surveys ordering")
+        verbose_name = _("Questions Ordering (Secondary)")
+        verbose_name_plural = _("Questions Ordering (Secondary)")
         unique_together = ('page', 'site',)
 
     site = models.ForeignKey(WebsiteList, verbose_name=_("Website"), on_delete=models.PROTECT)

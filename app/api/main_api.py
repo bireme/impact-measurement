@@ -38,14 +38,13 @@ class MainResource(ModelResource):
         if filter_page:
             questions = Questions.objects.filter(site=bundle.obj.id, page__slug=filter_page, level=1).order_by('question')
         else:
-            raise BadRequest("missing page param")
+            questions = Questions.objects.filter(site=bundle.obj.id, level=1).order_by('question')
 
         if questions:
             bundle.data['questions'] = []
-            obj_page = QuestionPageTypeList.objects.get(slug=filter_page)
 
             try:
-                obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page=obj_page.id)
+                obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page__slug=filter_page)
                 order = obj_order.order.split(",");
             except QuestionsOrdering.DoesNotExist:
                 order = None
