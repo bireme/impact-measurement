@@ -31,8 +31,8 @@ class QuestionsAdmin(admin.ModelAdmin):
     form = QuestionsForm
     inlines = [QuestionsLocalAdmin,]
     list_display = ('question', 'get_pages', 'context', 'type', 'level',)
-    list_filter = ('site', 'context', 'type', 'level',)
-    search_fields = ['question', 'page',]
+    list_filter = ('site', 'page', 'context', 'type', 'level',)
+    search_fields = ['question',]
     # filter_horizontal = ('site', 'page',)
 
     def get_pages(self, obj):
