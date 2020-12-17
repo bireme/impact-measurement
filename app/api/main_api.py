@@ -69,7 +69,7 @@ class MainResource(ModelResource):
                 bundle.data['questions'].append(_q)
 
             if bundle.data['questions']:
-                obj_sorted = sorted(bundle.data['questions'], key=operator.itemgetter('order'))
+                obj_sorted = sorted(bundle.data['questions'], key=operator.itemgetter('order'), reverse=True)
                 bundle.data['questions'] = obj_sorted
 
         return bundle

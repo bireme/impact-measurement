@@ -61,7 +61,7 @@ class SurveyView(ListView):
             for index, q in enumerate(object_list):
                 q.order = int(order[index])
 
-            object_list = sorted(object_list, key=lambda q: q.order)
+            object_list = sorted(object_list, key=lambda q: q.order, reverse=True)
 
         return object_list
 
