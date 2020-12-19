@@ -58,7 +58,7 @@ class MainResource(ModelResource):
                 _q['context'] = q.context
                 _q['type'] = q.type.slug
                 _q['question'] = {q.language: q.question}
-                _q['order'] = int(order[index]) if order and len(order) == len(questions) else index
+                _q['order'] = order[index] if order and len(order) == len(questions) else index
 
                 translations = QuestionsLocal.objects.filter(question=q.id)
 
