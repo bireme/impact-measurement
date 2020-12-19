@@ -53,15 +53,16 @@ class SurveyView(ListView):
 
         try:
             obj_order = SurveyOrdering.objects.get(site__code=param_code, page__slug=param_page_type_slug)
-            order = obj_order.order.split(",");
+            list_order = obj_order.order.split(",");
+            order = {int(k): v for v, k in enumerate(list_order, start=1)}
         except SurveyOrdering.DoesNotExist:
             order = None
 
         if order and len(order) == len(object_list):
-            for index, q in enumerate(object_list):
+            for index, q in enumerate(object_list, start=1):
                 q.order = int(order[index])
 
-            object_list = sorted(object_list, key=lambda q: q.order, reverse=True)
+            object_list = sorted(object_list, key=lambda q: q.order)
 
         return object_list
 

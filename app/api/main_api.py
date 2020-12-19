@@ -45,11 +45,12 @@ class MainResource(ModelResource):
 
             try:
                 obj_order = QuestionsOrdering.objects.get(site=bundle.obj.id, page__slug=filter_page)
-                order = obj_order.order.split(",");
+                list_order = obj_order.order.split(",");
+                order = {int(k): v for v, k in enumerate(list_order, start=1)}
             except QuestionsOrdering.DoesNotExist:
                 order = None
 
-            for index, q in enumerate(questions):
+            for index, q in enumerate(questions, start=1):
                 # _q = model_to_dict(q)
                 _q = {}
                 _q['id'] = q.id
@@ -57,7 +58,7 @@ class MainResource(ModelResource):
                 _q['context'] = q.context
                 _q['type'] = q.type.slug
                 _q['question'] = {q.language: q.question}
-                _q['order'] = int(order[index]) if order and len(order) == len(questions) else index+1
+                _q['order'] = int(order[index]) if order and len(order) == len(questions) else index
 
                 translations = QuestionsLocal.objects.filter(question=q.id)
 
@@ -69,7 +70,7 @@ class MainResource(ModelResource):
                 bundle.data['questions'].append(_q)
 
             if bundle.data['questions']:
-                obj_sorted = sorted(bundle.data['questions'], key=operator.itemgetter('order'), reverse=True)
+                obj_sorted = sorted(bundle.data['questions'], key=operator.itemgetter('order'))
                 bundle.data['questions'] = obj_sorted
 
         return bundle
