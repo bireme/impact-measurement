@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'rosetta',
     'django_userforeignkey',
+    # 'django_extensions',
 ]
 
 MIDDLEWARE = [
