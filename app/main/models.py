@@ -58,7 +58,8 @@ class QuestionContextList(Generic):
     slug = models.SlugField(_('Slug'), max_length=255, default='', editable=False)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = self.name.replace("/", " ")
+        self.slug = slugify(self.slug)
         super(QuestionContextList, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -77,7 +78,8 @@ class QuestionTypeList(Generic):
     slug = models.SlugField(_('Slug'), max_length=255, default='', editable=False)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = self.name.replace("/", " ")
+        self.slug = slugify(self.slug)
         super(QuestionTypeList, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -97,7 +99,8 @@ class QuestionPageTypeList(Generic):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = self.name.replace("/", " ")
+            self.slug = slugify(self.slug)
         super(QuestionPageTypeList, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -111,7 +114,7 @@ class Questions(Generic):
     class Meta:
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
-    
+
     question = models.CharField(_('Question'), max_length=455)
     site = models.ManyToManyField(WebsiteList, verbose_name=_('Websites'), blank=True)
     page = models.ManyToManyField(QuestionPageTypeList, verbose_name=_('Pages'), blank=True)

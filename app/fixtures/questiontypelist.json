@@ -58,5 +58,65 @@
         "name": "Likert 2",
         "slug": "likert-2"
     }
+},
+{
+    "model": "main.questiontypelist",
+    "pk": 6,
+    "fields": {
+        "created_time": "2021-09-13T22:54:26.958Z",
+        "updated_time": "2021-09-13T23:16:57.398Z",
+        "created_by": 1,
+        "updated_by": 1,
+        "name": "Yes/Somewhat/No",
+        "slug": "yes-somewhat-no"
+    }
+},
+{
+    "model": "main.questiontypelist",
+    "pk": 7,
+    "fields": {
+        "created_time": "2021-09-13T23:18:57.251Z",
+        "updated_time": "2021-09-13T23:18:57.251Z",
+        "created_by": 1,
+        "updated_by": 1,
+        "name": "Likert 3 - Likely",
+        "slug": "likert-3-likely"
+    }
+},
+{
+    "model": "main.questiontypelist",
+    "pk": 8,
+    "fields": {
+        "created_time": "2021-09-13T23:19:29.829Z",
+        "updated_time": "2021-09-13T23:19:29.829Z",
+        "created_by": 1,
+        "updated_by": 1,
+        "name": "Likert 4 - Reliable",
+        "slug": "likert-4-reliable"
+    }
+},
+{
+    "model": "main.questiontypelist",
+    "pk": 9,
+    "fields": {
+        "created_time": "2021-09-13T23:19:48.053Z",
+        "updated_time": "2021-09-13T23:19:48.053Z",
+        "created_by": 1,
+        "updated_by": 1,
+        "name": "Likert 5 - Well",
+        "slug": "likert-5-well"
+    }
+},
+{
+    "model": "main.questiontypelist",
+    "pk": 10,
+    "fields": {
+        "created_time": "2021-09-13T23:20:08.615Z",
+        "updated_time": "2021-09-13T23:20:39.057Z",
+        "created_by": 1,
+        "updated_by": 1,
+        "name": "Likert 6 - Excellent",
+        "slug": "likert-6-excellent"
+    }
 }
 ]
