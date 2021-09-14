@@ -142,17 +142,17 @@ class Questions(Generic):
         lang_code = get_language()
         translation = QuestionsLocal.objects.filter(question_id=self.id, language=lang_code)
         if translation:
-            return "%s | %s" % (translation[0].label, self.context)
+            return "%s | %s | %s" % (translation[0].label, self.context, self.type)
         else:
-            return "%s | %s" % (self.question, self.context)
+            return "%s | %s | %s" % (self.question, self.context, self.type)
 
     def __str__(self):
         lang_code = get_language()
         translation = QuestionsLocal.objects.filter(question_id=self.id, language=lang_code)
         if translation:
-            return "%s | %s" % (translation[0].label, self.context)
+            return "%s | %s | %s" % (translation[0].label, self.context, self.type)
         else:
-            return "%s | %s" % (self.question, self.context)
+            return "%s | %s | %s" % (self.question, self.context, self.type)
 
 class QuestionsOrdering(models.Model):
 
@@ -211,7 +211,7 @@ class Answers(Generic):
         verbose_name = _("Answer")
         verbose_name_plural = _("Answers")
 
-    question = models.ForeignKey(Questions, verbose_name=_("Question"), help_text=_("Question | Context"), blank=True, on_delete=models.PROTECT)
+    question = models.ForeignKey(Questions, verbose_name=_("Question"), help_text=_("Question | Context | Type"), blank=True, on_delete=models.PROTECT)
     rating = models.CharField(_('Rating'), max_length=55, blank=True)
     user = models.CharField(_('User'), max_length=255, blank=True)
     myvhl_user = models.CharField(_('MyVHL user'), max_length=255, blank=True)
