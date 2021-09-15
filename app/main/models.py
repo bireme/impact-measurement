@@ -17,8 +17,8 @@ LANGUAGES_CHOICES = (
     ('es', _('Spanish')),
     ('fr', _('French')),
     ('ru', _('Russian')),
-    ('zh', _('Arabic')),
-    ('ar', _('Spanish')),
+    ('zh', _('Chinese')),
+    ('ar', _('Arabic')),
 )
 
 LEVEL_CHOICES = (
