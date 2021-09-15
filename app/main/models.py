@@ -17,7 +17,7 @@ LANGUAGES_CHOICES = (
     ('es', _('Spanish')),
     ('fr', _('French')),
     ('ru', _('Russian')),
-    ('zh', _('Chinese')),
+    ('zh', _('Simplified Chinese')),
     ('ar', _('Arabic')),
 )
 
