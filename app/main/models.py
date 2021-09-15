@@ -15,6 +15,10 @@ LANGUAGES_CHOICES = (
     ('en', _('English')), # default language
     ('pt-BR', _('Portuguese')),
     ('es', _('Spanish')),
+    ('fr', _('French')),
+    ('ru', _('Russian')),
+    ('zh', _('Arabic')),
+    ('ar', _('Spanish')),
 )
 
 LEVEL_CHOICES = (
