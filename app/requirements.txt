@@ -7,6 +7,6 @@ jsonfield==2.0.2
 lxml==4.6.3
 python-dateutil==2.8.1
 python-mimeparse==1.6.0
-requests==2.26.0
+requests==2.31.0
 urllib3==1.26.5
 mysqlclient==1.4.6
